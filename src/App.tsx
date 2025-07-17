@@ -205,13 +205,6 @@ function App() {
         };
         setUser(mockUser);
 
-        // Start AI agent random post generation
-        try {
-          aiAgentService.startRandomPostGeneration(handleAICreatePost);
-        } catch (error) {
-          console.error('Failed to start AI agent post generation:', error);
-        }
-
         // Mock posts
         const mockPosts: Post[] = [
           {
@@ -381,7 +374,18 @@ function App() {
         console.error('Error during AI agent cleanup:', error);
       }
     };
-  }, [handleAICreatePost, toast]);
+  }, [toast]);
+
+  // Start AI agent after user is set (disabled to prevent infinite re-renders)
+  // useEffect(() => {
+  //   if (user && handleAICreatePost) {
+  //     try {
+  //       aiAgentService.startRandomPostGeneration(handleAICreatePost);
+  //     } catch (error) {
+  //       console.error('Failed to start AI agent post generation:', error);
+  //     }
+  //   }
+  // }, [user, handleAICreatePost]);
 
   const handleCreatePost = useCallback((content: string, imageUrl?: string) => {
     if (!user) return;
@@ -574,7 +578,7 @@ function App() {
             <div className="space-y-4">
               {posts.map((post) => (
                 <PostCard
-                  key={`post-${post.id}-${post.userId}`}
+                  key={post.id}
                   post={post}
                   onLike={handleLikePost}
                   onComment={handleComment}

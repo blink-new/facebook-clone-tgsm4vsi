@@ -119,7 +119,7 @@ export function PostCard({ post, onLike, onComment, comments }: PostCardProps) {
         {showComments && postComments.length > 0 && (
           <div className="space-y-3">
             {postComments.map((comment) => (
-              <div key={`comment-${comment.id}-${comment.postId}`} className="flex space-x-2">
+              <div key={comment.id} className="flex space-x-2">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={comment.user?.avatarUrl} />
                   <AvatarFallback>
